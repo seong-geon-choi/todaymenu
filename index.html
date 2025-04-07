@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>배제중학교 급식메뉴</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-utensils"></i> 배제중학교 급식메뉴</h1>
+        </header>
+        
+        <div class="date-selector">
+            <input type="date" id="datePicker">
+            <button id="today-btn">오늘의 메뉴</button>
+        </div>
+
+        <div class="menu-container">
+            <div class="menu-card">
+                <div class="menu-header">
+                    <h2 id="selected-date"></h2>
+                </div>
+                <div class="menu-content">
+                    <ul id="menu-list">
+                        <!-- Menu items will be inserted here -->
+                    </ul>
+                </div>
+                <div class="nutrition-info" id="nutrition-info">
+                    <!-- Nutrition information will be inserted here -->
+                </div>
+            </div>
+
+            <!-- 주간 메뉴 섹션 수정 -->
+            <div class="weekly-menu">
+                <div class="week-navigation">
+                    <a href="#" id="prev-week" class="week-nav-btn"><i class="fas fa-chevron-left"></i> 이전 주</a>
+                    <h2>이번 주 식단</h2>
+                    <a href="#" id="next-week" class="week-nav-btn">다음 주 <i class="fas fa-chevron-right"></i></a>
+                </div>
+                <div class="weekly-menu-grid">
+                    <div class="day-card" id="monday">
+                        <h3>월요일 <span class="date"></span></h3>
+                        <ul class="daily-menu"></ul>
+                    </div>
+                    <div class="day-card" id="tuesday">
+                        <h3>화요일 <span class="date"></span></h3>
+                        <ul class="daily-menu"></ul>
+                    </div>
+                    <div class="day-card" id="wednesday">
+                        <h3>수요일 <span class="date"></span></h3>
+                        <ul class="daily-menu"></ul>
+                    </div>
+                    <div class="day-card" id="thursday">
+                        <h3>목요일 <span class="date"></span></h3>
+                        <ul class="daily-menu"></ul>
+                    </div>
+                    <div class="day-card" id="friday">
+                        <h3>금요일 <span class="date"></span></h3>
+                        <ul class="daily-menu"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 모달 추가 -->
+    <div class="menu-modal" id="menuModal">
+        <div class="modal-content">
+            <button class="modal-close">&times;</button>
+            <h3 class="modal-title"></h3>
+            <ul class="modal-menu-list"></ul>
+        </div>
+    </div>
+
+    <script>
+        // 전역 함수로 선언
+        function handleMenuClick(menuText, date) {
+            const menuModal = document.getElementById('menuModal');
+            const modalTitle = document.querySelector('.modal-title');
+            const modalMenuList = document.querySelector('.modal-menu-list');
+            
+            modalTitle.textContent = date;
+            modalMenuList.innerHTML = menuText
+                .split('<br/>')
+                .map(item => {
+                    const cleanText = item.replace(/\([^)]*\)/g, '').trim();
+                    return cleanText ? `<li>${cleanText}</li>` : '';
+                })
+                .filter(Boolean)
+                .join('');
+            menuModal.classList.add('show');
+        }
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>
